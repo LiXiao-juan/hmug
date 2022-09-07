@@ -10,7 +10,7 @@
     <swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
       <swiper-item v-for="item,i in banners" :key="item.goods_id">
         <view class="swiper-item">
-          <image :src="item.image_src" mode="widthFix" @click="toGoodsDetail(item.goods_id)"></image>
+          <image  :src="item.image_src" mode="widthFix" @click="toGoodsDetail(item.goods_id)"></image>
         </view>
       </swiper-item>
     </swiper>
@@ -31,12 +31,12 @@
         <view class="floor-img-box">
                   <!-- 左侧大图片的盒子 -->
                   <view class="left-img-box">
-                    <image :style="{width:item.product_list[0].image_width + 'rpx'}" class="left-img" :src="item.product_list[0].image_src"></image>
+                    <image @click="goGoodsList(item.product_list[0].navigator_url)" :style="{width:item.product_list[0].image_width + 'rpx'}" class="left-img" :src="item.product_list[0].image_src"></image>
                   </view>
                   <!-- 右侧 4 个小图片的盒子 -->
                   <view class="right-img-box">
                     <view class="right-img-item" v-if="i !== 0" v-for="item2,i in item.product_list">
-                      <image class="image":style="{width:item2.image_width + 'rpx'}" :src="item2.image_src"></image>
+                      <image @click="goGoodsList(item2.navigator_url)" class="image":style="{width:item2.image_width + 'rpx'}" :src="item2.image_src"></image>
                     </view>
                   </view>
         </view>
@@ -91,6 +91,12 @@
         const res = await getFloor()
         console.log(res.message);
         this.floors = res.message
+      },
+      goGoodsList(url){
+        console.log();
+        uni.navigateTo({
+          url:'/subpkg/goods_list/goods_list'+ url.slice(url.indexOf('?'))
+        })
       }
     }
   }
